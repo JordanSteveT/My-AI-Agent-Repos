@@ -9,17 +9,47 @@ export default function AuditIA() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     trackEvent('audit_form_submit');
     
-    // Simulate API call
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget);
+    // Clé d'accès Web3Forms via variable d'environnement
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+    
+    if (!accessKey) {
+      console.warn("Clé Web3Forms manquante. Simulation de l'envoi.");
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        trackEvent('audit_form_success');
+      }, 1500);
+      return;
+    }
+
+    formData.append("access_key", accessKey);
+    formData.append("subject", "Nouveau lead : Demande d'Audit IA !");
+    formData.append("from_name", "AIAgent Website");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        setIsSuccess(true);
+        trackEvent('audit_form_success');
+      } else {
+        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      }
+    } catch (error) {
+      console.error("Erreur de soumission:", error);
+      alert("Erreur de connexion. Veuillez vérifier votre réseau.");
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      trackEvent('audit_form_success');
-    }, 1500);
+    }
   };
 
   return (
@@ -88,22 +118,22 @@ export default function AuditIA() {
                   <div className="grid grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-1">Prénom</label>
-                      <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                      <input required name="prenom" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-1">Nom</label>
-                      <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                      <input required name="nom" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
                     </div>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-1">Email professionnel</label>
-                    <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
+                    <input required name="email" type="email" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-1">Taille de l'entreprise</label>
-                    <select required className="w-full bg-[#12121a] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                    <select required name="taille_entreprise" className="w-full bg-[#12121a] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
                       <option value="">Sélectionnez...</option>
                       <option value="1-10">1 à 10 employés</option>
                       <option value="11-50">11 à 50 employés</option>
@@ -114,7 +144,7 @@ export default function AuditIA() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-1">Quel est votre problème principal actuel ?</label>
-                    <textarea required rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-gray-600" placeholder="Ex: Mon équipe support passe 4h par jour à répondre aux mêmes questions..."></textarea>
+                    <textarea required name="probleme" rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-gray-600" placeholder="Ex: Mon équipe support passe 4h par jour à répondre aux mêmes questions..."></textarea>
                   </div>
 
                   <button 
