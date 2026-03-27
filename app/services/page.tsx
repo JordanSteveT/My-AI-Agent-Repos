@@ -17,11 +17,11 @@ export default function Services() {
             Expertise & Solutions
           </span>
           <h1 className="text-4xl md:text-6xl font-bold font-display mb-6">
-            Des agents IA pour chaque <br className="hidden md:block" />
-            <span className="gradient-text">département stratégique</span>
+            Des assistants virtuels pour <br className="hidden md:block" />
+            <span className="gradient-text">chaque métier</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Nous ne vendons pas de simples chatbots. Nous concevons des employés digitaux sur mesure, capables de raisonner, d'agir sur vos outils et de générer un ROI mesurable.
+            Nous créons des outils simples qui travaillent pour vous. Confiez-leur vos tâches répétitives et concentrez-vous sur ce qui compte vraiment : votre cœur de métier et vos clients.
           </p>
         </div>
       </div>

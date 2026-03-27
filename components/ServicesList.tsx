@@ -6,43 +6,43 @@ import { Bot, Users, Zap, LineChart, Database, CheckCircle2 } from 'lucide-react
 const services = [
   {
     id: 'support',
-    title: "Support Client Autonome",
+    title: "Service Client 24/7",
     icon: <Bot className="text-blue-400" size={32} />,
-    description: "Transformez votre service client avec un agent IA capable de comprendre le contexte, de consulter votre base de données et de résoudre 70% des tickets de niveau 1 instantanément, 24/7.",
-    benefits: ["Temps de réponse < 2 secondes", "Satisfaction client en hausse", "Désengorgement de vos équipes"],
-    roi: "Réduction de 40% des coûts de support"
+    description: "Un assistant virtuel qui répond instantanément aux questions de vos clients (suivi de commande, horaires, retours) et résout les problèmes courants sans intervention humaine.",
+    benefits: ["Réponse immédiate aux clients", "Plus de clients satisfaits", "Moins d'appels téléphoniques à gérer"],
+    roi: "Jusqu'à 40% de temps gagné au support"
   },
   {
     id: 'rh',
-    title: "Assistant RH & Recrutement",
+    title: "Aide au Recrutement",
     icon: <Users className="text-purple-400" size={32} />,
-    description: "Automatisez le tri des CVs, la pré-qualification des candidats par chat ou voix, et l'onboarding administratif. Ne perdez plus de temps sur le sourcing, concentrez-vous sur l'humain.",
-    benefits: ["Tri de 1000+ CVs en quelques minutes", "Entretiens de pré-qualification 24/7", "Génération automatique de synthèses"],
-    roi: "15h gagnées par semaine par recruteur"
+    description: "Automatisez le tri des CV et les premiers échanges avec les candidats. Ne perdez plus de temps à lire des centaines de profils qui ne correspondent pas à vos critères.",
+    benefits: ["Tri automatique des candidatures", "Premiers entretiens par chat", "Résumés clairs des meilleurs profils"],
+    roi: "Des heures de lecture de CV évitées"
   },
   {
     id: 'ops',
-    title: "Optimisation Opérationnelle",
+    title: "Saisie de Données Automatique",
     icon: <Zap className="text-blue-400" size={32} />,
-    description: "Fini la saisie manuelle. Nos agents extraient les données de vos factures, contrats et emails (OCR/NLP), mettent à jour votre ERP/CRM et génèrent des rapports automatiquement.",
-    benefits: ["Zéro erreur de saisie", "Traitement de documents en masse", "Synchronisation API temps réel"],
-    roi: "Processus 10x plus rapides"
+    description: "Fini la copie manuelle. Notre système lit vos factures, contrats et emails, puis range les informations directement dans vos logiciels de gestion.",
+    benefits: ["Plus d'erreurs de copie", "Traitement instantané des documents", "Mise à jour automatique de vos logiciels"],
+    roi: "Fini la paperasse ennuyeuse"
   },
   {
     id: 'sales',
-    title: "Génération de Leads & Ventes",
+    title: "Prospection Intelligente",
     icon: <LineChart className="text-purple-400" size={32} />,
-    description: "Un agent IA qui qualifie vos visiteurs web, personnalise vos séquences d'emails à grande échelle en analysant le profil de vos prospects, et prend des rendez-vous directement dans votre agenda.",
-    benefits: ["Hyper-personnalisation à l'échelle", "Qualification des leads 24/7", "Augmentation des taux de conversion"],
-    roi: "+35% de rendez-vous qualifiés"
+    description: "Un assistant qui accueille les visiteurs sur votre site web, comprend leurs besoins et leur propose de prendre rendez-vous directement dans votre agenda.",
+    benefits: ["Accueil personnalisé de chaque visiteur", "Prise de rendez-vous automatique", "Plus de clients potentiels identifiés"],
+    roi: "Votre site web devient un vrai commercial"
   },
   {
     id: 'knowledge',
-    title: "Copilote Interne d'Entreprise",
+    title: "Assistant pour vos Employés",
     icon: <Database className="text-blue-400" size={32} />,
-    description: "Un assistant virtuel connecté à tout votre savoir d'entreprise (Notion, Google Drive, Slack). Vos employés posent une question et obtiennent la réponse exacte sourcée instantanément.",
-    benefits: ["Recherche d'information instantanée", "Onboarding des nouveaux accéléré", "Sécurité des données garantie"],
-    roi: "2h économisées par employé / semaine"
+    description: "Un moteur de recherche interne intelligent. Vos employés posent une question (ex: 'Quelle est la procédure pour les congés ?') et obtiennent la réponse exacte immédiatement.",
+    benefits: ["Trouver l'information en 2 secondes", "Formation des nouveaux plus rapide", "Fini les questions répétitives entre collègues"],
+    roi: "Vos employés gagnent un temps précieux"
   }
 ];
 

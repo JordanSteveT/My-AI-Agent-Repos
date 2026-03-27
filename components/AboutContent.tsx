@@ -75,17 +75,17 @@ export default function AboutContent() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display">
-              Le fossé entre la <span className="text-neon-blue">hype</span> et la réalité
+              L'Intelligence Artificielle, <span className="text-neon-blue">simplement</span>
             </h2>
             <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
               <p>
-                Tout le monde parle d'Intelligence Artificielle. Pourtant, la majorité des entreprises se contentent d'utiliser ChatGPT comme un simple moteur de recherche amélioré.
+                On entend beaucoup parler d'IA, souvent avec des termes techniques compliqués. Chez AIAgent, nous voulons rendre cette technologie accessible et surtout <strong className="text-white">utile</strong> pour les PME.
               </p>
               <p>
-                Chez AIAgent, nous avons fait un constat simple : la vraie valeur de l'IA ne réside pas dans un chat, mais dans <strong className="text-white">l'automatisation de processus métiers complexes</strong>.
+                Notre constat est simple : vous n'avez pas besoin de comprendre comment fonctionne un algorithme. Vous avez besoin de <strong className="text-white">gagner du temps, réduire vos coûts et éviter les erreurs</strong>.
               </p>
               <p>
-                C'est pourquoi nous concevons des agents IA sur mesure, capables de s'intégrer à vos outils existants (CRM, ERP, boîtes mail) pour exécuter des tâches chronophages en totale autonomie.
+                C'est pourquoi nous créons des assistants virtuels sur mesure. Ils s'occupent des tâches informatiques ennuyeuses et répétitives, pour que vous et votre équipe puissiez vous concentrer sur l'humain et le développement de votre entreprise.
               </p>
             </div>
           </motion.div>

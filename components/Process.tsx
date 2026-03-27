@@ -1,9 +1,9 @@
 export default function Process() {
   const steps = [
-    { num: '01', title: 'Audit & Stratégie', desc: 'Analyse approfondie de vos processus chronophages et identification des opportunités de ROI.' },
-    { num: '02', title: 'Conception Sur Mesure', desc: 'Entraînement de l\'IA sur vos données spécifiques (FAQ, historique, ton de marque).' },
-    { num: '03', title: 'Déploiement', desc: 'Intégration fluide à vos outils existants (WhatsApp, Site web, CRM, Téléphone).' },
-    { num: '04', title: 'Optimisation Continue', desc: 'Amélioration constante des performances basée sur l\'analyse des interactions réelles.' },
+    { num: '01', title: 'Découverte de vos besoins', desc: 'Nous discutons ensemble pour identifier les tâches qui vous font perdre le plus de temps au quotidien.' },
+    { num: '02', title: 'Création de votre assistant', desc: 'Nous configurons un assistant virtuel qui connaît votre entreprise, vos règles et votre façon de parler.' },
+    { num: '03', title: 'Mise en place simple', desc: 'Nous connectons l\'assistant à vos outils actuels (votre site web, votre boîte mail, votre agenda) sans rien bouleverser.' },
+    { num: '04', title: 'Suivi et amélioration', desc: 'Nous vérifions que tout fonctionne parfaitement et nous ajustons l\'assistant selon vos retours.' },
   ];
 
   return (

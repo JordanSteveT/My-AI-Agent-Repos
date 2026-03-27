@@ -16,10 +16,10 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Solutions</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/services" className="hover:text-white transition-colors">Automatisation Service Client</Link></li>
-              <li><Link href="/services" className="hover:text-white transition-colors">Agents IA RH & Recrutement</Link></li>
-              <li><Link href="/services" className="hover:text-white transition-colors">Optimisation Opérationnelle</Link></li>
-              <li><Link href="/services" className="hover:text-white transition-colors">Génération de Leads IA</Link></li>
+              <li><Link href="/services" className="hover:text-white transition-colors">Service Client Automatique</Link></li>
+              <li><Link href="/services" className="hover:text-white transition-colors">Aide au Recrutement</Link></li>
+              <li><Link href="/services" className="hover:text-white transition-colors">Saisie Automatique</Link></li>
+              <li><Link href="/services" className="hover:text-white transition-colors">Prospection Intelligente</Link></li>
             </ul>
           </div>
           <div>

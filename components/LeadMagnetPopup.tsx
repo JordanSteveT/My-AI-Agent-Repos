@@ -101,8 +101,8 @@ export default function LeadMagnetPopup() {
                   <Download size={24} />
                 </div>
                 
-                <h3 className="text-2xl font-bold text-white mb-2">Le Guide Ultime de l'Automatisation IA</h3>
-                <p className="text-gray-400 mb-6 text-sm">Découvrez les 5 processus que vos concurrents automatisent déjà pour économiser 20h/semaine.</p>
+                <h3 className="text-2xl font-bold text-white mb-2">Le Guide Pratique de l'Automatisation</h3>
+                <p className="text-gray-400 mb-6 text-sm">Découvrez 5 tâches simples que vous pouvez automatiser dès aujourd'hui pour gagner plusieurs heures par semaine.</p>
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>

@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import StickyCTA from '@/components/StickyCTA';
 import LeadMagnetPopup from '@/components/LeadMagnetPopup';
+import Chatbot from '@/components/Chatbot';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Footer />
         <StickyCTA />
         <LeadMagnetPopup />
+        <Chatbot />
       </body>
     </html>
   );
