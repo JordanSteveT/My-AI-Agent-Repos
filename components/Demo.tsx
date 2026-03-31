@@ -3,31 +3,48 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { CheckCircle2, Bot } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Demo() {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState([
-    { role: 'agent', text: 'Bonjour ! Comment puis-je vous aider aujourd\'hui ?' }
+    { role: 'agent', text: t.demo.messages[0] }
   ]);
 
   useEffect(() => {
+    // Reset messages when language changes
+    let isMounted = true;
+    
+    // We use a small timeout to avoid synchronous setState in useEffect
+    const resetTimeout = setTimeout(() => {
+      if (isMounted) {
+        setMessages([{ role: 'agent', text: t.demo.messages[0] }]);
+      }
+    }, 0);
+
     const sequence = [
-      { role: 'user', text: 'Je voudrais réserver une table pour 4 personnes ce soir à 20h.', delay: 2000 },
-      { role: 'agent', text: 'Parfait ! J\'ai vérifié nos disponibilités. Il nous reste une table en terrasse ou en salle. Que préférez-vous ?', delay: 4000 },
-      { role: 'user', text: 'En terrasse s\'il vous plaît.', delay: 7000 },
-      { role: 'agent', text: 'C\'est noté. Votre réservation pour 4 personnes ce soir à 20h en terrasse est confirmée. Un SMS de confirmation vient de vous être envoyé. À ce soir !', delay: 9000 },
+      { role: 'user', text: t.demo.messages[1], delay: 2000 },
+      { role: 'agent', text: t.demo.messages[2], delay: 4000 },
+      { role: 'user', text: t.demo.messages[3], delay: 7000 },
+      { role: 'agent', text: t.demo.messages[4], delay: 9000 },
     ];
 
-    let timeouts: ReturnType<typeof setTimeout>[] = [];
+    let timeouts: ReturnType<typeof setTimeout>[] = [resetTimeout];
 
     sequence.forEach(({ role, text, delay }) => {
       const timeout = setTimeout(() => {
-        setMessages(prev => [...prev, { role, text }]);
+        if (isMounted) {
+          setMessages(prev => [...prev, { role, text }]);
+        }
       }, delay);
       timeouts.push(timeout);
     });
 
-    return () => timeouts.forEach(clearTimeout);
-  }, []);
+    return () => {
+      isMounted = false;
+      timeouts.forEach(clearTimeout);
+    };
+  }, [t.demo.messages]);
 
   return (
     <section id="demo" className="py-24 px-10 relative">
@@ -35,18 +52,13 @@ export default function Demo() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-6">
-              Une intelligence qui <span className="text-neon-blue">comprend le contexte</span>
+              {t.demo.title1}<span className="text-neon-blue">{t.demo.titleHighlight}</span>
             </h2>
             <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-              Nos agents ne se contentent pas de répondre à des mots-clés. Ils comprennent l&apos;intention, gèrent des flux de conversation complexes et exécutent des actions réelles (réservations, CRM, paiements).
+              {t.demo.subtitle}
             </p>
             <ul className="space-y-4">
-              {[
-                'Connexion directe à vos outils existants',
-                'Apprentissage continu sur vos données',
-                'Disponible 24/7 sans interruption',
-                'Support multilingue natif'
-              ].map((item, i) => (
+              {t.demo.features.map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-gray-300">
                   <CheckCircle2 className="w-5 h-5 text-neon-blue shrink-0" />
                   <span>{item}</span>
@@ -64,9 +76,9 @@ export default function Demo() {
                   <Bot className="w-6 h-6 text-neon-blue" />
                 </div>
                 <div>
-                  <div className="font-medium text-white">Agent IA Réservation</div>
+                  <div className="font-medium text-white">{t.demo.agentName}</div>
                   <div className="text-xs text-neon-blue flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neon-blue animate-pulse" /> En ligne
+                    <span className="w-1.5 h-1.5 rounded-full bg-neon-blue animate-pulse" /> {t.demo.online}
                   </div>
                 </div>
               </div>

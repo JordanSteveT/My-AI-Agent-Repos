@@ -2,51 +2,24 @@
 
 import { motion } from 'motion/react';
 import { Bot, Users, Zap, LineChart, Database, CheckCircle2 } from 'lucide-react';
-
-const services = [
-  {
-    id: 'support',
-    title: "Service Client 24/7",
-    icon: <Bot className="text-blue-400" size={32} />,
-    description: "Un assistant virtuel qui répond instantanément aux questions de vos clients (suivi de commande, horaires, retours) et résout les problèmes courants sans intervention humaine.",
-    benefits: ["Réponse immédiate aux clients", "Plus de clients satisfaits", "Moins d'appels téléphoniques à gérer"],
-    roi: "Jusqu'à 40% de temps gagné au support"
-  },
-  {
-    id: 'rh',
-    title: "Aide au Recrutement",
-    icon: <Users className="text-purple-400" size={32} />,
-    description: "Automatisez le tri des CV et les premiers échanges avec les candidats. Ne perdez plus de temps à lire des centaines de profils qui ne correspondent pas à vos critères.",
-    benefits: ["Tri automatique des candidatures", "Premiers entretiens par chat", "Résumés clairs des meilleurs profils"],
-    roi: "Des heures de lecture de CV évitées"
-  },
-  {
-    id: 'ops',
-    title: "Saisie de Données Automatique",
-    icon: <Zap className="text-blue-400" size={32} />,
-    description: "Fini la copie manuelle. Notre système lit vos factures, contrats et emails, puis range les informations directement dans vos logiciels de gestion.",
-    benefits: ["Plus d'erreurs de copie", "Traitement instantané des documents", "Mise à jour automatique de vos logiciels"],
-    roi: "Fini la paperasse ennuyeuse"
-  },
-  {
-    id: 'sales',
-    title: "Prospection Intelligente",
-    icon: <LineChart className="text-purple-400" size={32} />,
-    description: "Un assistant qui accueille les visiteurs sur votre site web, comprend leurs besoins et leur propose de prendre rendez-vous directement dans votre agenda.",
-    benefits: ["Accueil personnalisé de chaque visiteur", "Prise de rendez-vous automatique", "Plus de clients potentiels identifiés"],
-    roi: "Votre site web devient un vrai commercial"
-  },
-  {
-    id: 'knowledge',
-    title: "Assistant pour vos Employés",
-    icon: <Database className="text-blue-400" size={32} />,
-    description: "Un moteur de recherche interne intelligent. Vos employés posent une question (ex: 'Quelle est la procédure pour les congés ?') et obtiennent la réponse exacte immédiatement.",
-    benefits: ["Trouver l'information en 2 secondes", "Formation des nouveaux plus rapide", "Fini les questions répétitives entre collègues"],
-    roi: "Vos employés gagnent un temps précieux"
-  }
-];
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function ServicesList() {
+  const { t } = useLanguage();
+
+  const serviceIcons = [
+    <Bot className="text-blue-400" size={32} key="bot" />,
+    <Users className="text-purple-400" size={32} key="users" />,
+    <Zap className="text-blue-400" size={32} key="zap" />,
+    <LineChart className="text-purple-400" size={32} key="chart" />,
+    <Database className="text-blue-400" size={32} key="db" />
+  ];
+
+  const services = t.servicesPage.items.map((item, index) => ({
+    ...item,
+    id: `service-${index}`,
+    icon: serviceIcons[index]
+  }));
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -79,7 +52,7 @@ export default function ServicesList() {
             </div>
 
             <div className="inline-block px-4 py-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold w-fit">
-              ROI attendu : {service.roi}
+              {t.servicesPage.roiPrefix}{service.roi}
             </div>
           </motion.div>
         ))}
@@ -92,15 +65,15 @@ export default function ServicesList() {
           transition={{ delay: 0.5 }}
           className="gradient-bg p-8 md:p-10 rounded-3xl flex flex-col justify-center items-center text-center shadow-[0_0_30px_rgba(59,130,246,0.2)]"
         >
-          <h3 className="text-3xl font-bold text-white mb-4 font-display">Un besoin spécifique ?</h3>
+          <h3 className="text-3xl font-bold text-white mb-4 font-display">{t.servicesPage.customTitle}</h3>
           <p className="text-white/90 mb-8 leading-relaxed max-w-md">
-            Nous développons des agents IA sur mesure pour répondre aux défis uniques de votre industrie. Discutons de votre cas d'usage.
+            {t.servicesPage.customDesc}
           </p>
           <a 
             href="/audit-ia" 
             className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-colors shadow-lg"
           >
-            Parler à un expert
+            {t.servicesPage.customBtn}
           </a>
         </motion.div>
       </div>

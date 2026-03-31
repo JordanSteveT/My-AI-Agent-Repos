@@ -3,8 +3,10 @@
 import { motion } from 'motion/react';
 import { ChevronRight } from 'lucide-react';
 import DataFlowAnimation from './DataFlowAnimation';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Hero() {
+  const { t } = useLanguage();
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden px-6">
       <DataFlowAnimation />
@@ -18,7 +20,7 @@ export default function Hero() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-medium text-neon-blue mb-8"
         >
           <span className="w-2 h-2 rounded-full bg-neon-blue animate-pulse" />
-          L&apos;avenir de l&apos;automatisation est là
+          {t.hero.badge}
         </motion.div>
         
         <motion.h1 
@@ -27,7 +29,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="font-display text-5xl md:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-6"
         >
-          Libérez votre entreprise des <span className="text-gradient">tâches répétitives</span>
+          {t.hero.title1} <span className="text-gradient">{t.hero.titleHighlight}</span>
         </motion.h1>
         
         <motion.p 
@@ -36,7 +38,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed"
         >
-          Des agents IA 100% autonomes, pas juste des chatbots. Augmentez votre rentabilité et gagnez des centaines d&apos;heures par mois grâce à des assistants intelligents sur mesure.
+          {t.hero.subtitle}
         </motion.p>
         
         <motion.div 
@@ -46,10 +48,10 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a href="/audit-ia" className="w-full sm:w-auto px-8 py-4 rounded-full bg-neon-blue text-black font-semibold hover:bg-neon-blue/90 hover:shadow-[0_0_30px_rgba(0,209,255,0.3)] transition-all flex items-center justify-center gap-2">
-            Réserver un Audit Gratuit <ChevronRight className="w-4 h-4" />
+            {t.hero.cta1} <ChevronRight className="w-4 h-4" />
           </a>
           <a href="#demo" className="w-full sm:w-auto px-8 py-4 rounded-full glass-card text-white font-medium hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-            Voir la Démo en Action
+            {t.hero.cta2}
           </a>
         </motion.div>
       </div>

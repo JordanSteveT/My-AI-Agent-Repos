@@ -2,36 +2,28 @@
 
 import { motion } from 'motion/react';
 import { Shield, Zap, TrendingDown, Lock } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function ObjectionSection() {
-  const objections = [
-    {
-      icon: <TrendingDown size={24} />,
-      title: "« Ça va coûter trop cher »",
-      response: "Nos agents IA sont conçus pour être rentables dès le 3ème mois. Vous ne payez pas pour une technologie, vous investissez dans une réduction de vos coûts opérationnels."
-    },
-    {
-      icon: <Zap size={24} />,
-      title: "« C'est trop complexe à intégrer »",
-      response: "Nous gérons 100% de l'intégration. Nos agents se connectent à vos outils existants (Slack, CRM, ERP) sans perturber vos processus actuels."
-    },
-    {
-      icon: <Shield size={24} />,
-      title: "« Mes employés vont avoir peur »",
-      response: "L'IA ne remplace pas vos équipes, elle les augmente. Nous formons vos collaborateurs à utiliser ces outils pour qu'ils se concentrent sur des tâches à haute valeur ajoutée."
-    },
-    {
-      icon: <Lock size={24} />,
-      title: "« Mes données ne sont pas en sécurité »",
-      response: "Sécurité de niveau entreprise. Vos données restent les vôtres, hébergées en Europe (RGPD) et ne sont jamais utilisées pour entraîner des modèles publics."
-    }
+  const { t } = useLanguage();
+  
+  const icons = [
+    <TrendingDown size={24} key="trending" />,
+    <Zap size={24} key="zap" />,
+    <Shield size={24} key="shield" />,
+    <Lock size={24} key="lock" />
   ];
+
+  const objections = t.objections.items.map((item, index) => ({
+    ...item,
+    icon: icons[index]
+  }));
 
   return (
     <section className="py-24 bg-[#0a0a0f]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">Ce qui vous retient (et pourquoi vous avez tort)</h2>
+          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">{t.objections.title}</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">

@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { trackEvent } from '@/lib/analytics';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
+import { useLanguage } from '@/lib/i18n/LanguageContext';
+
 export default function HeroConversion() {
+  const { t } = useLanguage();
+  
   return (
     <section className="relative pt-20 pb-32 overflow-hidden">
       {/* Background elements */}
@@ -18,15 +22,14 @@ export default function HeroConversion() {
           transition={{ duration: 0.6 }}
         >
           <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-blue-400 mb-6">
-            L'avantage concurrentiel de 2024
+            {t.heroConversion.badge}
           </span>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 font-display leading-tight">
-            Automatisez votre entreprise avec des <br className="hidden md:block" />
-            <span className="gradient-text">agents IA sur mesure</span>
+            {t.heroConversion.title1} <br className="hidden md:block" />
+            <span className="gradient-text">{t.heroConversion.titleHighlight}</span>
           </h1>
           <p className="text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Transformez vos processus internes en machines automatisées. 
-            Réduisez vos coûts opérationnels de 40% et libérez votre équipe des tâches répétitives en moins de 30 jours.
+            {t.heroConversion.desc}
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -35,27 +38,23 @@ export default function HeroConversion() {
               onClick={() => trackEvent('click_hero_audit')}
               className="w-full sm:w-auto gradient-bg text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] flex items-center justify-center gap-2"
             >
-              Réserver un audit IA gratuit <ArrowRight size={20} />
+              {t.heroConversion.cta1} <ArrowRight size={20} />
             </Link>
             <Link 
               href="/services"
               onClick={() => trackEvent('click_hero_services')}
               className="w-full sm:w-auto bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-colors flex items-center justify-center"
             >
-              Voir comment ça fonctionne
+              {t.heroConversion.cta2}
             </Link>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-            <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-blue-500" /> Sans engagement
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-blue-500" /> ROI garanti en 3 mois
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-blue-500" /> Intégration transparente
-            </div>
+            {t.heroConversion.features.map((feature, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <CheckCircle size={16} className="text-blue-500" /> {feature}
+              </div>
+            ))}
           </div>
         </motion.div>
       </div>

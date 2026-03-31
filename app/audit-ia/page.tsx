@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { trackEvent } from '@/lib/analytics';
 import { Shield, Clock, CheckCircle } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function AuditIA() {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -42,11 +44,11 @@ export default function AuditIA() {
         setIsSuccess(true);
         trackEvent('audit_form_success');
       } else {
-        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+        alert(t.audit.error1);
       }
     } catch (error) {
       console.error("Erreur de soumission:", error);
-      alert("Erreur de connexion. Veuillez vérifier votre réseau.");
+      alert(t.audit.error2);
     } finally {
       setIsSubmitting(false);
     }
@@ -62,13 +64,11 @@ export default function AuditIA() {
           {/* Left Column: Value Proposition */}
           <div>
             <span className="inline-block py-1 px-3 rounded-full bg-blue-500/10 border border-blue-500/20 text-sm font-medium text-blue-400 mb-6">
-              Audit Stratégique Offert 
+              {t.audit.subtitle}
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold font-display mb-6 leading-tight">
-              Découvrez combien de temps l'IA peut vous faire gagner
-            </h1>
+            <h1 className="text-4xl md:text-6xl font-bold font-display mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: t.audit.title }} />
             <p className="text-xl text-gray-400 mb-8">
-              En 30 minutes, nous analysons vos processus actuels et vous livrons une feuille de route claire pour automatiser vos tâches les plus chronophages.
+              {t.audit.desc}
             </p>
             
             <div className="space-y-6 mb-12">
@@ -77,8 +77,8 @@ export default function AuditIA() {
                   <Clock size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-1">Rapide & Concret</h3>
-                  <p className="text-gray-400 text-sm">Pas de blabla théorique. Nous identifions 3 processus à automatiser immédiatement.</p>
+                  <h3 className="font-bold text-white mb-1">{t.audit.features[0].title}</h3>
+                  <p className="text-gray-400 text-sm">{t.audit.features[0].desc}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -86,8 +86,8 @@ export default function AuditIA() {
                   <Shield size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white mb-1">100% Confidentiel</h3>
-                  <p className="text-gray-400 text-sm">Vos données et processus restent strictement confidentiels (NDA sur demande).</p>
+                  <h3 className="font-bold text-white mb-1">{t.audit.features[1].title}</h3>
+                  <p className="text-gray-400 text-sm">{t.audit.features[1].desc}</p>
                 </div>
               </div>
             </div>
@@ -104,47 +104,47 @@ export default function AuditIA() {
                 <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 mx-auto mb-6">
                   <CheckCircle size={40} />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Demande confirmée !</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">{t.audit.successTitle}</h3>
                 <p className="text-gray-400">
-                  Notre équipe va vous contacter d'ici 24h pour planifier votre audit gratuit.
+                  {t.audit.successDesc}
                 </p>
               </div>
             ) : (
               <>
-                <h3 className="text-2xl font-bold text-white mb-2">Réservez votre créneau</h3>
-                <p className="text-gray-400 text-sm mb-8">Remplissez ce formulaire pour que nous puissions préparer notre échange.</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{t.audit.formTitle}</h3>
+                <p className="text-gray-400 text-sm mb-8">{t.audit.formDesc}</p>
                 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-1">Prénom</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">{t.audit.labels.firstName}</label>
                       <input required name="prenom" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-1">Nom</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">{t.audit.labels.lastName}</label>
                       <input required name="nom" type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
                     </div>
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-1">Email professionnel</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">{t.audit.labels.email}</label>
                     <input required name="email" type="email" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-1">Taille de l'entreprise</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">{t.audit.labels.size}</label>
                     <select required name="taille_entreprise" className="w-full bg-[#12121a] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
-                      <option value="">Sélectionnez...</option>
-                      <option value="1-10">1 à 10 employés</option>
-                      <option value="11-50">11 à 50 employés</option>
-                      <option value="51-200">51 à 200 employés</option>
-                      <option value="200+">Plus de 200 employés</option>
+                      <option value="">{t.audit.labels.sizeSelect}</option>
+                      <option value="1-10">{t.audit.labels.size1}</option>
+                      <option value="11-50">{t.audit.labels.size2}</option>
+                      <option value="51-200">{t.audit.labels.size3}</option>
+                      <option value="200+">{t.audit.labels.size4}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-1">Quel est votre problème principal actuel ?</label>
-                    <textarea required name="probleme" rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-gray-600" placeholder="Ex: Mon équipe support passe 4h par jour à répondre aux mêmes questions..."></textarea>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">{t.audit.labels.problem}</label>
+                    <textarea required name="probleme" rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-gray-600" placeholder={t.audit.labels.problemPlaceholder}></textarea>
                   </div>
 
                   <button 
@@ -152,10 +152,10 @@ export default function AuditIA() {
                     disabled={isSubmitting}
                     className="w-full gradient-bg text-white font-semibold py-4 rounded-lg hover:opacity-90 transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50 flex justify-center items-center"
                   >
-                    {isSubmitting ? 'Envoi en cours...' : 'Demander mon audit gratuit'}
+                    {isSubmitting ? t.audit.submittingBtn : t.audit.submitBtn}
                   </button>
                   <p className="text-xs text-center text-gray-500">
-                    En soumettant ce formulaire, vous acceptez notre politique de confidentialité.
+                    {t.audit.privacy}
                   </p>
                 </form>
               </>

@@ -4,71 +4,56 @@ import { motion } from 'motion/react';
 import { Calendar, Clock, ArrowRight, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import CTASection from '@/components/CTASection';
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "Comment l'IA générative transforme le service client en 2024",
-    excerpt: "Découvrez comment les agents IA autonomes permettent de résoudre 80% des requêtes clients instantanément tout en améliorant la satisfaction.",
-    category: "Service Client",
-    date: "12 Mars 2024",
-    readTime: "5 min",
-    imageGradient: "from-blue-500/20 to-cyan-500/20",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Automatisation RH : 5 processus à déléguer à un agent IA",
-    excerpt: "Du tri des CV à l'onboarding, voici les tâches chronophages que vos équipes RH ne devraient plus faire manuellement.",
-    category: "Ressources Humaines",
-    date: "5 Mars 2024",
-    readTime: "4 min",
-    imageGradient: "from-purple-500/20 to-pink-500/20",
-    featured: false
-  },
-  {
-    id: 3,
-    title: "PME : Par où commencer votre transition vers l'IA ?",
-    excerpt: "Un guide étape par étape pour identifier les processus les plus rentables à automatiser dans votre entreprise sans vous ruiner.",
-    category: "Stratégie",
-    date: "28 Février 2024",
-    readTime: "7 min",
-    imageGradient: "from-emerald-500/20 to-teal-500/20",
-    featured: false
-  },
-  {
-    id: 4,
-    title: "Génération de leads : Qualifier vos prospects 24/7",
-    excerpt: "Comment configurer un agent conversationnel capable de poser les bonnes questions et de prendre des rendez-vous automatiquement.",
-    category: "Ventes",
-    date: "15 Février 2024",
-    readTime: "6 min",
-    imageGradient: "from-orange-500/20 to-red-500/20",
-    featured: false
-  },
-  {
-    id: 5,
-    title: "Les limites de ChatGPT en entreprise",
-    excerpt: "Pourquoi un simple chatbot grand public ne suffit pas pour vos processus métiers et pourquoi vous avez besoin d'agents sur mesure.",
-    category: "Technologie",
-    date: "2 Février 2024",
-    readTime: "5 min",
-    imageGradient: "from-indigo-500/20 to-blue-500/20",
-    featured: false
-  },
-  {
-    id: 6,
-    title: "ROI de l'automatisation : Étude d'impact",
-    excerpt: "Analyse détaillée des gains de productivité et de la réduction des coûts après l'intégration d'agents IA dans une agence immobilière.",
-    category: "Étude de cas",
-    date: "20 Janvier 2024",
-    readTime: "8 min",
-    imageGradient: "from-rose-500/20 to-orange-500/20",
-    featured: false
-  }
-];
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function BlogContent() {
+  const { t } = useLanguage();
+
+  const blogPosts = [
+    {
+      id: 1,
+      ...t.blog.posts[0],
+      date: "12 Mars 2024",
+      imageGradient: "from-blue-500/20 to-cyan-500/20",
+      featured: true
+    },
+    {
+      id: 2,
+      ...t.blog.posts[1],
+      date: "5 Mars 2024",
+      imageGradient: "from-purple-500/20 to-pink-500/20",
+      featured: false
+    },
+    {
+      id: 3,
+      ...t.blog.posts[2],
+      date: "28 Février 2024",
+      imageGradient: "from-emerald-500/20 to-teal-500/20",
+      featured: false
+    },
+    {
+      id: 4,
+      ...t.blog.posts[3],
+      date: "15 Février 2024",
+      imageGradient: "from-orange-500/20 to-red-500/20",
+      featured: false
+    },
+    {
+      id: 5,
+      ...t.blog.posts[4],
+      date: "2 Février 2024",
+      imageGradient: "from-indigo-500/20 to-blue-500/20",
+      featured: false
+    },
+    {
+      id: 6,
+      ...t.blog.posts[5],
+      date: "20 Janvier 2024",
+      imageGradient: "from-rose-500/20 to-orange-500/20",
+      featured: false
+    }
+  ];
+
   const featuredPost = blogPosts.find(post => post.featured);
   const regularPosts = blogPosts.filter(post => !post.featured);
 
@@ -86,7 +71,7 @@ export default function BlogContent() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-medium text-neon-purple mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-neon-purple animate-pulse" />
-          Ressources & Insights
+          {t.blog.subtitle}
         </motion.div>
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
@@ -94,7 +79,7 @@ export default function BlogContent() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-5xl md:text-7xl font-bold font-display mb-6 tracking-tight"
         >
-          Notre <span className="text-gradient">Blog</span>
+          {t.blog.title1}<span className="text-gradient">{t.blog.titleHighlight}</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -102,7 +87,7 @@ export default function BlogContent() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
         >
-          Découvrez nos derniers articles, guides et analyses sur l'impact de l'intelligence artificielle et de l'automatisation en entreprise.
+          {t.blog.desc}
         </motion.p>
       </div>
 
@@ -137,7 +122,7 @@ export default function BlogContent() {
                   {featuredPost.excerpt}
                 </p>
                 <div className="flex items-center text-white font-medium group-hover:text-neon-blue transition-colors mt-auto">
-                  Lire l'article <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                  {t.blog.readArticle} <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -178,7 +163,7 @@ export default function BlogContent() {
                   {post.excerpt}
                 </p>
                 <div className="flex items-center text-sm text-white font-medium group-hover:text-neon-purple transition-colors mt-auto">
-                  Lire la suite <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                  {t.blog.readMore} <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </motion.div>

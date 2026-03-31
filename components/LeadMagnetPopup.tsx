@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Download, CheckCircle } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function LeadMagnetPopup() {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,11 +57,11 @@ export default function LeadMagnetPopup() {
         setIsSuccess(true);
         setTimeout(() => setIsOpen(false), 2000);
       } else {
-        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+        alert(t.popup.error1);
       }
     } catch (error) {
       console.error("Erreur de soumission:", error);
-      alert("Erreur de connexion. Veuillez vérifier votre réseau.");
+      alert(t.popup.error2);
     } finally {
       setIsSubmitting(false);
     }
@@ -90,9 +92,9 @@ export default function LeadMagnetPopup() {
                 <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 mx-auto mb-4">
                   <CheckCircle size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Guide envoyé !</h3>
+                <h3 className="text-xl font-bold text-white mb-2">{t.popup.successTitle}</h3>
                 <p className="text-gray-400 text-sm">
-                  Vérifiez votre boîte mail, le guide devrait arriver d'ici quelques minutes.
+                  {t.popup.successDesc}
                 </p>
               </div>
             ) : (
@@ -101,15 +103,15 @@ export default function LeadMagnetPopup() {
                   <Download size={24} />
                 </div>
                 
-                <h3 className="text-2xl font-bold text-white mb-2">Le Guide Pratique de l'Automatisation</h3>
-                <p className="text-gray-400 mb-6 text-sm">Découvrez 5 tâches simples que vous pouvez automatiser dès aujourd'hui pour gagner plusieurs heures par semaine.</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{t.popup.title}</h3>
+                <p className="text-gray-400 mb-6 text-sm">{t.popup.desc}</p>
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <input 
                       type="email" 
                       name="email"
-                      placeholder="Votre adresse email pro" 
+                      placeholder={t.popup.placeholder} 
                       required
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
                     />
@@ -119,10 +121,10 @@ export default function LeadMagnetPopup() {
                     disabled={isSubmitting}
                     className="w-full gradient-bg text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity flex justify-center items-center gap-2 disabled:opacity-50"
                   >
-                    {isSubmitting ? 'Envoi en cours...' : 'Recevoir le guide gratuit'}
+                    {isSubmitting ? t.popup.buttonSubmitting : t.popup.button}
                   </button>
                 </form>
-                <p className="text-xs text-gray-500 text-center mt-4">100% gratuit. Désinscription à tout moment.</p>
+                <p className="text-xs text-gray-500 text-center mt-4">{t.popup.footer}</p>
               </>
             )}
           </motion.div>

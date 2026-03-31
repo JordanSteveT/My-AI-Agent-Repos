@@ -1,9 +1,15 @@
+'use client';
+
+import { useLanguage } from '@/lib/i18n/LanguageContext';
+
 export default function Process() {
+  const { t } = useLanguage();
+
   const steps = [
-    { num: '01', title: 'Découverte de vos besoins', desc: 'Nous discutons ensemble pour identifier les tâches qui vous font perdre le plus de temps au quotidien.' },
-    { num: '02', title: 'Création de votre assistant', desc: 'Nous configurons un assistant virtuel qui connaît votre entreprise, vos règles et votre façon de parler.' },
-    { num: '03', title: 'Mise en place simple', desc: 'Nous connectons l\'assistant à vos outils actuels (votre site web, votre boîte mail, votre agenda) sans rien bouleverser.' },
-    { num: '04', title: 'Suivi et amélioration', desc: 'Nous vérifions que tout fonctionne parfaitement et nous ajustons l\'assistant selon vos retours.' },
+    { num: '01', title: t.process.steps[0].title, desc: t.process.steps[0].desc },
+    { num: '02', title: t.process.steps[1].title, desc: t.process.steps[1].desc },
+    { num: '03', title: t.process.steps[2].title, desc: t.process.steps[2].desc },
+    { num: '04', title: t.process.steps[3].title, desc: t.process.steps[3].desc },
   ];
 
   return (
@@ -11,10 +17,10 @@ export default function Process() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-            Notre méthode de <span className="text-neon-blue">déploiement</span>
+            {t.process.title1} <span className="text-neon-blue">{t.process.titleHighlight}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Un processus éprouvé pour intégrer l&apos;IA dans votre entreprise sans perturber vos opérations actuelles.
+            {t.process.subtitle}
           </p>
         </div>
 

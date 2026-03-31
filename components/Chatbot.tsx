@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, X, Send, Loader2, Bot } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 import { trackEvent } from '@/lib/analytics';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 type Message = {
   id: string;
@@ -13,18 +14,53 @@ type Message = {
 };
 
 export default function Chatbot() {
+  const { t, language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'model',
-      text: "Bonjour ! Je suis l'assistant virtuel d'AIAgent. Comment puis-je vous aider aujourd'hui ? (Nos services, l'audit gratuit...)"
+      text: t.chatbot.defaultMsg
     }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<any>(null);
+
+  const initChat = useCallback(() => {
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) return false;
+
+    try {
+      const ai = new GoogleGenAI({ apiKey });
+      chatRef.current = ai.chats.create({
+        model: 'gemini-3-flash-preview',
+        config: {
+          systemInstruction: t.chatbot.systemInstruction
+        }
+      });
+      return true;
+    } catch (error) {
+      console.error("Failed to initialize Gemini chat:", error);
+      return false;
+    }
+  }, [t.chatbot.systemInstruction]);
+
+  // Update default message when language changes if it's the only message
+  useEffect(() => {
+    setMessages(prev => {
+      if (prev.length === 1 && prev[0].id === '1') {
+        return [{ ...prev[0], text: t.chatbot.defaultMsg }];
+      }
+      return prev;
+    });
+    
+    // Re-initialize chat with new system instructions if language changes
+    if (chatRef.current) {
+      initChat();
+    }
+  }, [language, t, initChat]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -34,40 +70,9 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages, isLoading]);
 
-  const initChat = () => {
-    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-    if (!apiKey) return false;
-
-    try {
-      const ai = new GoogleGenAI({ apiKey });
-      chatRef.current = ai.chats.create({
-        model: 'gemini-3-flash-preview',
-        config: {
-          systemInstruction: `Tu es l'assistant de AIAgent, une agence qui aide les PME à gagner du temps avec l'IA. 
-          Ton ton doit être EXTRÊMEMENT HUMAIN, naturel, empathique et chaleureux. Parle comme une vraie personne qui discute avec un client de manière détendue mais professionnelle.
-          Évite absolument les réponses robotiques, les formules toutes faites ou le jargon technique.
-          
-          Tes objectifs :
-          1. Expliquer nos services simplement (Service Client 24/7, Aide au Recrutement, Saisie Automatique, Prospection, Assistant Interne).
-          2. Parler de notre mission : faire gagner du temps et réduire les coûts des PME.
-          3. Proposer l'Audit IA gratuit (un appel de 30 min) de manière naturelle.
-          
-          RÈGLES DE FORMAT :
-          - Fais des réponses COURTES et PRÉCISES (1 à 2 phrases maximum), mais garde un ton conversationnel et vivant.
-          - Ne fais jamais de longues listes. Va droit au but tout en restant sympathique.
-          - Si l'utilisateur veut un audit, invite-le chaleureusement à cliquer sur "Audit IA Gratuit" dans le menu.`
-        }
-      });
-      return true;
-    } catch (error) {
-      console.error("Failed to initialize Gemini chat:", error);
-      return false;
-    }
-  };
-
   useEffect(() => {
     initChat();
-  }, []);
+  }, [initChat]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +89,7 @@ export default function Chatbot() {
         setMessages(prev => [...prev, { 
           id: Date.now().toString(), 
           role: 'model', 
-          text: "Désolé, la clé API Gemini n'est pas configurée. Je ne peux pas vous répondre pour le moment." 
+          text: t.chatbot.noKey 
         }]);
         setIsLoading(false);
       }, 1000);
@@ -102,14 +107,14 @@ export default function Chatbot() {
       setMessages(prev => [...prev, { 
         id: Date.now().toString(), 
         role: 'model', 
-        text: response.text || "Je n'ai pas bien compris." 
+        text: response.text || t.chatbot.error 
       }]);
     } catch (error) {
       console.error("Chat error:", error);
       setMessages(prev => [...prev, { 
         id: Date.now().toString(), 
         role: 'model', 
-        text: "Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer." 
+        text: t.chatbot.error 
       }]);
     } finally {
       setIsLoading(false);
@@ -151,10 +156,10 @@ export default function Chatbot() {
                   <Bot size={18} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white text-sm">Assistant AIAgent</h3>
+                  <h3 className="font-semibold text-white text-sm">{t.chatbot.title}</h3>
                   <p className="text-xs text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>
-                    En ligne
+                    {t.chatbot.online}
                   </p>
                 </div>
               </div>
@@ -202,7 +207,7 @@ export default function Chatbot() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Posez votre question..."
+                  placeholder={t.chatbot.placeholder}
                   className="flex-1 bg-black/50 border border-white/10 rounded-full px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-gray-500"
                 />
                 <button

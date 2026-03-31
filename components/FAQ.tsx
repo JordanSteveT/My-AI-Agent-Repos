@@ -3,24 +3,27 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function FAQ() {
+  const { t } = useLanguage();
+  
   const faqs = [
     {
-      question: "Combien de temps faut-il pour déployer un agent IA ?",
-      answer: "En moyenne, un agent IA sur mesure est déployé en 3 à 4 semaines. Cela inclut l'audit, le développement, les tests et la formation de vos équipes."
+      question: t.faq.items[0].q,
+      answer: t.faq.items[0].a
     },
     {
-      question: "Quels outils utilisez-vous ?",
-      answer: "Nous utilisons les meilleurs modèles du marché (GPT-4, Claude 3, Gemini) que nous connectons à vos outils via des architectures sur mesure (LangChain, n8n, Make) pour garantir performance et sécurité."
+      question: t.faq.items[1].q,
+      answer: t.faq.items[1].a
     },
     {
-      question: "Faut-il des compétences techniques en interne ?",
-      answer: "Absolument pas. Nous livrons des solutions clés en main. Vous interagissez avec l'agent en langage naturel, comme avec un employé humain."
+      question: t.faq.items[2].q,
+      answer: t.faq.items[2].a
     },
     {
-      question: "Quel est le ROI moyen ?",
-      answer: "Nos clients constatent un ROI positif entre 2 et 4 mois. En moyenne, un agent IA permet d'économiser l'équivalent d'un demi-poste à temps plein sur des tâches répétitives."
+      question: t.faq.items[3].q,
+      answer: t.faq.items[3].a
     }
   ];
 
@@ -30,7 +33,7 @@ export default function FAQ() {
     <section className="py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">Questions Fréquentes</h2>
+          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">{t.faq.title}</h2>
         </div>
 
         <div className="space-y-4">

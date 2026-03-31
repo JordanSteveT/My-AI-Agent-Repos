@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import StickyCTA from '@/components/StickyCTA';
 import LeadMagnetPopup from '@/components/LeadMagnetPopup';
 import Chatbot from '@/components/Chatbot';
+import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
@@ -23,14 +24,16 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${spaceGrotesk.variable} scroll-smooth`}>
       <body className="bg-[#050505] text-white antialiased selection:bg-blue-500/30" suppressHydrationWarning>
-        <Navbar />
-        <main className="min-h-screen pt-20">
-          {children}
-        </main>
-        <Footer />
-        <StickyCTA />
-        <LeadMagnetPopup />
-        <Chatbot />
+        <LanguageProvider>
+          <Navbar />
+          <main className="min-h-screen pt-20">
+            {children}
+          </main>
+          <Footer />
+          <StickyCTA />
+          <LeadMagnetPopup />
+          <Chatbot />
+        </LanguageProvider>
       </body>
     </html>
   );

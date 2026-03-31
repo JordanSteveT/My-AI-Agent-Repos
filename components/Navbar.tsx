@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -17,9 +19,9 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Services', href: '/services' },
-    { name: 'À propos', href: '/a-propos' },
-    { name: 'Blog', href: '/blog' },
+    { name: t.nav.services, href: '/services' },
+    { name: t.nav.about, href: '/a-propos' },
+    { name: t.nav.blog, href: '/blog' },
   ];
 
   return (
@@ -42,14 +44,30 @@ export default function Navbar() {
             onClick={() => trackEvent('click_nav_audit')}
             className="gradient-bg text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(59,130,246,0.5)]"
           >
-            Audit IA Gratuit
+            {t.nav.audit}
           </Link>
+          <button 
+            onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
+            className="flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors ml-2"
+          >
+            <Globe size={18} />
+            <span className="uppercase">{language}</span>
+          </button>
         </nav>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden text-gray-300" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          <button 
+            onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
+            className="text-gray-300 flex items-center gap-1 text-sm font-medium uppercase"
+          >
+            <Globe size={18} />
+            {language}
+          </button>
+          <button className="text-gray-300" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}
@@ -72,7 +90,7 @@ export default function Navbar() {
             }}
             className="gradient-bg text-white px-6 py-3 rounded-full text-base font-semibold mt-2"
           >
-            Audit IA Gratuit
+            {t.nav.audit}
           </Link>
         </motion.div>
       )}

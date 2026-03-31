@@ -3,31 +3,22 @@
 import { motion } from 'motion/react';
 import { Target, Zap, ShieldCheck, Lightbulb, ArrowRight } from 'lucide-react';
 import CTASection from '@/components/CTASection';
-
-const values = [
-  {
-    icon: <Target className="w-6 h-6 text-neon-blue" />,
-    title: "Pragmatisme",
-    description: "Nous ne faisons pas de l'IA pour faire de l'IA. Nous créons des solutions qui ont un impact direct et mesurable sur votre rentabilité."
-  },
-  {
-    icon: <Zap className="w-6 h-6 text-neon-purple" />,
-    title: "Vélocité",
-    description: "Le monde de l'IA évolue vite. Nous déployons des agents fonctionnels en quelques semaines, pas en plusieurs mois."
-  },
-  {
-    icon: <ShieldCheck className="w-6 h-6 text-neon-blue" />,
-    title: "Sécurité & Fiabilité",
-    description: "Vos données sont précieuses. Nos agents sont conçus avec les plus hauts standards de sécurité et de confidentialité."
-  },
-  {
-    icon: <Lightbulb className="w-6 h-6 text-neon-purple" />,
-    title: "Innovation Continue",
-    description: "Nous assurons une veille technologique permanente pour que vos agents bénéficient toujours des meilleurs modèles du marché."
-  }
-];
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function AboutContent() {
+  const { t } = useLanguage();
+
+  const valuesIcons = [
+    <Target className="w-6 h-6 text-neon-blue" key="target" />,
+    <Zap className="w-6 h-6 text-neon-purple" key="zap" />,
+    <ShieldCheck className="w-6 h-6 text-neon-blue" key="shield" />,
+    <Lightbulb className="w-6 h-6 text-neon-purple" key="lightbulb" />
+  ];
+
+  const values = t.about.valuesItems.map((item, index) => ({
+    ...item,
+    icon: valuesIcons[index]
+  }));
   return (
     <div className="pt-32 pb-10 overflow-hidden relative">
       {/* Background Effects */}
@@ -42,7 +33,7 @@ export default function AboutContent() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-medium text-neon-blue mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-neon-blue animate-pulse" />
-          À propos de nous
+          {t.about.subtitle}
         </motion.div>
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
@@ -50,19 +41,16 @@ export default function AboutContent() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-5xl md:text-7xl font-bold font-display mb-6 tracking-tight"
         >
-          Notre mission : <br className="hidden md:block" />
-          <span className="text-gradient">Démocratiser l'IA</span>
+          {t.about.title1} <br className="hidden md:block" />
+          <span className="text-gradient">{t.about.titleHighlight}</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
-        >
-          Nous transformons le potentiel théorique de l'intelligence artificielle en 
-          <strong className="text-white font-medium"> résultats concrets </strong> 
-          pour les PME ambitieuses.
-        </motion.p>
+          dangerouslySetInnerHTML={{ __html: t.about.desc }}
+        />
       </div>
 
       {/* Story Section */}
@@ -74,19 +62,11 @@ export default function AboutContent() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display">
-              L'Intelligence Artificielle, <span className="text-neon-blue">simplement</span>
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display" dangerouslySetInnerHTML={{ __html: t.about.storyTitle }} />
             <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
-              <p>
-                On entend beaucoup parler d'IA, souvent avec des termes techniques compliqués. Chez AIAgent, nous voulons rendre cette technologie accessible et surtout <strong className="text-white">utile</strong> pour les PME.
-              </p>
-              <p>
-                Notre constat est simple : vous n'avez pas besoin de comprendre comment fonctionne un algorithme. Vous avez besoin de <strong className="text-white">gagner du temps, réduire vos coûts et éviter les erreurs</strong>.
-              </p>
-              <p>
-                C'est pourquoi nous créons des assistants virtuels sur mesure. Ils s'occupent des tâches informatiques ennuyeuses et répétitives, pour que vous et votre équipe puissiez vous concentrer sur l'humain et le développement de votre entreprise.
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t.about.storyP1 }} />
+              <p dangerouslySetInnerHTML={{ __html: t.about.storyP2 }} />
+              <p dangerouslySetInnerHTML={{ __html: t.about.storyP3 }} />
             </div>
           </motion.div>
           
@@ -104,17 +84,12 @@ export default function AboutContent() {
                   <Zap className="w-6 h-6 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Notre promesse</h3>
-                  <p className="text-gray-400 text-sm">Ce que nous vous apportons</p>
+                  <h3 className="text-xl font-bold text-white">{t.about.promiseTitle}</h3>
+                  <p className="text-gray-400 text-sm">{t.about.promiseSubtitle}</p>
                 </div>
               </div>
               <ul className="space-y-4">
-                {[
-                  "Réduction drastique des coûts opérationnels",
-                  "Élimination des erreurs humaines",
-                  "Disponibilité 24/7 de vos processus",
-                  "Recentrage de vos équipes sur l'essentiel"
-                ].map((item, i) => (
+                {t.about.promiseItems.map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-gray-300">
                     <ArrowRight className="w-5 h-5 text-neon-purple shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -129,9 +104,9 @@ export default function AboutContent() {
       {/* Values Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">Nos Valeurs</h2>
+          <h2 className="text-3xl md:text-5xl font-bold font-display mb-6">{t.about.valuesTitle}</h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Les principes qui guident chacune de nos collaborations et le développement de nos agents IA.
+            {t.about.valuesDesc}
           </p>
         </div>
 

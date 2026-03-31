@@ -2,26 +2,29 @@
 
 import { motion } from 'motion/react';
 import { Star, Bot, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function ServicesSection() {
+  const { t } = useLanguage();
+  
   const services = [
     {
       icon: <Star className="w-6 h-6 text-neon-blue" />,
-      title: 'Restauration',
-      description: 'Ne manquez plus aucune réservation pendant le service.',
-      features: ['Gestion des réservations 24/7', 'Réponse automatique aux avis', 'Prise de commande en ligne']
+      title: t.services.cards[0].title,
+      description: t.services.cards[0].desc,
+      features: [t.services.cards[0].f1, t.services.cards[0].f2, t.services.cards[0].f3]
     },
     {
       icon: <Bot className="w-6 h-6 text-neon-purple" />,
-      title: 'Hôtellerie',
-      description: 'Offrez une expérience premium avant même l\'arrivée.',
-      features: ['Conciergerie virtuelle multilingue', 'Check-in/out automatisé', 'Recommandations locales']
+      title: t.services.cards[1].title,
+      description: t.services.cards[1].desc,
+      features: [t.services.cards[1].f1, t.services.cards[1].f2, t.services.cards[1].f3]
     },
     {
       icon: <TrendingUp className="w-6 h-6 text-emerald-400" />,
-      title: 'PME & Services',
-      description: 'Automatisez votre support et qualifiez vos prospects.',
-      features: ['Support client instantané', 'Qualification de leads', 'Prise de rendez-vous automatisée']
+      title: t.services.cards[2].title,
+      description: t.services.cards[2].desc,
+      features: [t.services.cards[2].f1, t.services.cards[2].f2, t.services.cards[2].f3]
     }
   ];
 
@@ -30,10 +33,10 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-            Des solutions sur mesure par <span className="text-gradient">secteur</span>
+            {t.services.title1} <span className="text-gradient">{t.services.titleHighlight}</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Chaque industrie a ses propres défis. Nos agents sont entraînés spécifiquement pour répondre aux exigences de votre métier.
+            {t.services.subtitle}
           </p>
         </div>
         
